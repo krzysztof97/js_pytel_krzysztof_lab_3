@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.main-container {
+    position: relative;
+}
+
+.content-container {
+    margin: 10px;
+}
+
+.header {
+    color: gray;
+    padding: 0px 10px;
+    background-color: #e4fafa;
+    border: 1px solid #9fffff;
+}
+
+.modal {
+    position:fixed;
+    display:none;
+}
+
+.modal--visible {
+    display: block;
+}
+
+.btn {
+    border: none;
+    display: inline-block;
+    color: white;
+    background-color: #008CBA;
+    padding: 5px 10px;
+}

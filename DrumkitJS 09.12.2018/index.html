@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drums</title>
+    <script src="drums.js"></script>
+</head>
+<body>
+    <input type="range" min="60" max="180" value="120" id="tempo">
+    <input type="radio" name="channel" value="channel1" checked>
+    <input type="radio" name="channel" value="channel2">
+    <input type="radio" name="channel" value="channel3">
+    <input type="radio" name="channel" value="channel4">
+    <button id="rec">Nagrywaj</button>
+    <button id="play">Odtwarzaj</button>
+    <audio src="sounds/boom.wav" controls id="boom"></audio>
+    <audio src="sounds/clap.wav" controls id="clap"></audio>
+    <audio src="sounds/hihat.wav" controls id="hihat"></audio>
+    <audio src="sounds/kick.wav" controls id="kick"></audio>
+    <audio src="sounds/openhat.wav" controls id="openhat"></audio>
+    <audio src="sounds/ride.wav" controls id="ride"></audio>
+    <audio src="sounds/snare.wav" controls id="snare"></audio>
+    <audio src="sounds/tom.wav" controls id="tom"></audio>
+    <audio src="sounds/tink.wav" controls id="tink"></audio>
+</body>
+</html>
