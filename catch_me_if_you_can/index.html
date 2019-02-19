@@ -10,11 +10,36 @@
             height:400px;
             width:100%;
         }
+        .beg-for-location {
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+        }
+        .beg-for-location--visible {
+            display: flex;
+        }
+        .beg-for-location__text {
+            padding: 10;
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
     <h3>My Google Maps Demo</h3>
     <div id="map"></div>
+    <div class="beg-for-location"><span class="beg-for-location__text">please refresh this page and enable location services</span></div>
     <script src="script.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARkS-dsh-7IirtcQg3oSZEHudV6Uw9Iic&callback=initMap"></script>
 </body>
