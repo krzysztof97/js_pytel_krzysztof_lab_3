@@ -8,7 +8,7 @@ let guid = parseInt(Date.now() + Math.random() * 1000) // unikatowy identyfikato
 let icon = guid % 5 // numer obrazka
 
 //ws = new WebSocket("ws://91.121.6.192:8010")
-ws = new WebSocket("ws://77.55.222.58:8010")
+ws = new WebSocket("ws://77.55.222.58:443")
 
 function initMap()
 {
@@ -115,6 +115,10 @@ function receiveMessage(msg)
                 else
                     players[msg.id] = new google.maps.Marker({position: msg.coords, map: map, icon: iconString(msg.playericon)});
             }
+            if(msg.action == 'close')
+            {
+                players[msg.id].setMap(null)
+            }
         }
     }
 }
@@ -128,6 +132,14 @@ ws.onmessage = function(e)
     let msg = e.data
     receiveMessage(msg)
 };
+
+window.onbeforeunload = function(e)
+{
+    sendMessage({
+        id: guid,
+        action: 'close'
+    });
+}
 
 function iconString(number)
 {

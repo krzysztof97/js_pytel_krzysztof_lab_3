@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', appStart)
 
+let playButton
+
 const channel1 = []
 const channel2 = []
 const channel3 = []
 const channel4 = []
+let selectedChannel = 'ch1'
 
 const sounds = {
     97:     'boom',
@@ -19,21 +22,36 @@ const sounds = {
 
 let isRecording = false
 let recStart = 0
-let tempo = 120
 
 function appStart() {
+    playButton = document.querySelector('#play')
+
     window.addEventListener('keypress', playSound)
     document.querySelector('#rec').addEventListener('click', recAudio)
-    document.querySelector('#play').addEventListener('click', playAudio)
-    document.querySelector('#tempo').addEventListener('change', changeTempo)
-}
+    playButton.addEventListener('click', playAudio)
 
-function changeTempo(e) {
-    tempo = parseInt(e.target.value)
+    document.querySelectorAll('input[name=channel]').forEach(function(radio){
+        radio.addEventListener('click', function(e){
+            switch(e.target.value)
+            {
+                case 'channel1':
+                    selectedChannel = 'ch1';
+                    break;
+                case 'channel2':
+                    selectedChannel = 'ch2';
+                    break;
+                case 'channel3':
+                    selectedChannel = 'ch3';
+                    break;
+                case 'channel4':
+                    selectedChannel = 'ch4';
+                    break;
+            }
+        })
+    })
 }
 
 function playSound(e) {
-     console.log(e)
     // e.charCode
     if(!sounds[e.charCode]) {
         return
@@ -43,31 +61,52 @@ function playSound(e) {
     const audioDOM = document.querySelector(`#${soundName}`)
     audioDOM.currentTime = 0
     audioDOM.play()
-    console.log('odpalilem')
     if(isRecording)
     {
-        channel1.push(
-            {
-                name: soundName,
-                time: Date.now() - recStart
-            }
-        )
+        
+        pushSound({
+            name: soundName,
+            time: Date.now() - recStart
+        });
     }
+}
+
+function pushSound(object)
+{
+    switch(selectedChannel)
+            {
+                case 'ch1':
+                    channel1.push(object)
+                    break;
+                case 'ch2':
+                    channel2.push(object)
+                    break;
+                case 'ch3':
+                    channel3.push(object)
+                    break;
+                case 'ch4':
+                    channel4.push(object)
+                    break;
+            }
 }
 
 function recAudio(e) {
     recStart = Date.now()
     isRecording =!isRecording
-    e.target.innerHTML = isRecording ? "Stop" : "Nagrywaj"
-    if (isRecording) {
-        for(i=0; i<4; i++) {
-            setTimeout(metronomeTick(), i * 60000 )
-        }
+    if(isRecording)
+    {
+        e.target.innerHTML = "Stop recording"
+        playAudio()
+    }
+    else
+    {
+        e.target.innerHTML = "Record"
     }
 }
 
-function playAudio(e) {
-    channel1.forEach(sound => {
+function playAudio(e) 
+{
+    channel1.forEach(function(sound) {
         setTimeout(
             ()=> {
                 const audioDOM = document.querySelector(`#${sound.name}`)
@@ -75,10 +114,28 @@ function playAudio(e) {
                 audioDOM.play()
         }, sound.time)
     })
-}
-
-function metronomeTick() {
-    const audioDOM = document.querySelector(`#tink`)
-    audioDOM.currentTime = 0
-    audioDOM.play()
+    channel2.forEach(function(sound) {
+        setTimeout(
+            ()=> {
+                const audioDOM = document.querySelector(`#${sound.name}`)
+                audioDOM.currentTime = 0
+                audioDOM.play()
+        }, sound.time)
+    })
+    channel3.forEach(function(sound) {
+        setTimeout(
+            ()=> {
+                const audioDOM = document.querySelector(`#${sound.name}`)
+                audioDOM.currentTime = 0
+                audioDOM.play()
+        }, sound.time)
+    })
+    channel4.forEach(function(sound) {
+        setTimeout(
+            ()=> {
+                const audioDOM = document.querySelector(`#${sound.name}`)
+                audioDOM.currentTime = 0
+                audioDOM.play()
+        }, sound.time)
+    })
 }
