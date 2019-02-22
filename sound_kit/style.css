@@ -1,0 +1,62 @@
+button:focus {outline:0;}
+
+.hide {
+    display: none;
+}
+
+.trigger 
+{
+    width: 100px;
+    height: 100px;
+    border: 1px solid blue;
+    border-radius: 100px;
+    color: blue;
+    background-color: white;
+    margin: 10px;
+}
+
+.trigger:active
+{
+    border: 1px solid rgb(101, 101, 255);
+    color: rgb(101, 101, 255);
+}
+
+#rec {
+    width: 100px;
+    height: 100px;
+    border: none;
+    background-color: rgb(255, 65, 65);
+    border-radius: 100px;
+    color: white;
+    margin: 10px;
+}
+
+#rec:active {
+    background-color: rgb(255, 0, 0);
+}
+
+#play {
+    width: 100px;
+    height: 100px;
+    border: none;
+    background-color: rgb(65, 255, 65);
+    border-radius: 100px;
+    color: black;
+    margin: 10px;
+}
+
+#play:active {
+    background-color: rgb(0, 255, 0);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100vh;
+    flex-wrap: wrap;  
+}
+.trigger-container
+{
+    text-align: center;
+}

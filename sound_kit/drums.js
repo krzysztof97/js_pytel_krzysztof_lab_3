@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', appStart)
 
-let playButton
-
+// deklaracja kanałów
 const channel1 = []
 const channel2 = []
 const channel3 = []
 const channel4 = []
+
+// domyślnie ustawiam kanał pierwszy jako wybrany
 let selectedChannel = 'ch1'
 
+// lista dostępnych dźwięków
+// klucz to charcode wyzwalającego klawisza, wartość to nazwa dźwięku
 const sounds = {
     97:     'boom',
     115:    'clap',
@@ -20,15 +23,18 @@ const sounds = {
     108:    'tom',
 }
 
+//zmienna przechowująca czy nagrywanie w toku
 let isRecording = false
+
+// zmienna przechowująca czas rozpoczęcia nagrywania
 let recStart = 0
 
-function appStart() {
-    playButton = document.querySelector('#play')
-
-    window.addEventListener('keypress', playSound)
+// funkcja ustawiająca możliwe zdarzenia
+function appStart() 
+{
+    window.addEventListener('keypress', playByCode)
     document.querySelector('#rec').addEventListener('click', recAudio)
-    playButton.addEventListener('click', playAudio)
+    document.querySelector('#play').addEventListener('click', playAudio)
 
     document.querySelectorAll('input[name=channel]').forEach(function(radio){
         radio.addEventListener('click', function(e){
@@ -49,21 +55,33 @@ function appStart() {
             }
         })
     })
+
+    document.querySelectorAll('.trigger').forEach(function(trg){
+        trg.addEventListener('click', function(e){
+            playSound(e.target.value)
+        })
+    })
 }
 
-function playSound(e) {
-    // e.charCode
+function playByCode(e)
+{
     if(!sounds[e.charCode]) {
         return
     }
-
     const soundName = sounds[e.charCode]
+    playSound(soundName)
+}
+
+// funkcja odtwarzająca dźwięk przy użyciu znacznika AUDIO w HTML
+function playSound(soundName) 
+{
     const audioDOM = document.querySelector(`#${soundName}`)
     audioDOM.currentTime = 0
     audioDOM.play()
+
+    // jeśli nagrywanie trwa to zapisuję dźwięk do kanału
     if(isRecording)
     {
-        
         pushSound({
             name: soundName,
             time: Date.now() - recStart
@@ -71,6 +89,7 @@ function playSound(e) {
     }
 }
 
+// funkcja dodająca obiekt dźwięku do aktywnego kanału
 function pushSound(object)
 {
     switch(selectedChannel)
@@ -90,6 +109,8 @@ function pushSound(object)
             }
 }
 
+// funkcja zmieniająca stan nagrywania i treść przcisku
+// w momencie rozpoczęcia nagrywania uruchamia nagrane dotąd dźwięki
 function recAudio(e) {
     recStart = Date.now()
     isRecording =!isRecording
@@ -104,6 +125,7 @@ function recAudio(e) {
     }
 }
 
+// funkcja odtwarzająca wszystkie nagrane dźwięki
 function playAudio(e) 
 {
     channel1.forEach(function(sound) {
