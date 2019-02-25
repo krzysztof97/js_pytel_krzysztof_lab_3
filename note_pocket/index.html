@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>NotePocket</title>
 </head>
 <body>
     <div class="main-container">
@@ -14,27 +14,43 @@
             <h2>NotePocket</h2>
         </header>
     
-        <div class="content-container">
-                <button type="button" class="btn new-note-button" id="newNoteButton">+ Nowa notatka</button>
-
-                <div id="addNoteModal" class="modal">
-                    <div>
-                        Tytuł
-                        <input type="text" id="title">
-                    </div>
-                    <div>
-                        Treść
-                        <textarea id="description"></textarea>
-                    </div>
-                    <div>
-                        Kolor
-                        <input type="color" id="color">
-                    </div>
-                    <div>
-                        <input type="checkbox" id="attach"> Przypięta
-                    </div>
-                    <button type="button" class="btn add-note-button" id="addNoteButton">Zapisz</button>
+        <div class="button-container">
+            <button type="button" class="btn new-note-button" id="newNoteButton">New note</button>
+            <button type="button" class="btn clean-notes-button" id="cleanNotesButton">Clean</button>
+        </div>
+    
+        <div class="notes-container" id="notesContainer">
+            <!--
+                KONTENER NOTATEK
+            -->
+        </div>
+    </div>
+    <div id="addNoteContainer" class="addnote-container">
+        <div class="modal">
+            <div class="modal-header">
+                New note
+            </div>
+            <div class="modal-body">
+                <div class="input-container">
+                    Title
+                    <input type="text" id="title">
                 </div>
+                <div class="input-container">
+                    Description
+                    <textarea id="description"></textarea>
+                </div>
+                <div class="input-container">
+                    Color
+                    <input type="color" id="color">
+                </div>
+                <div class="input-container">
+                    <input type="checkbox" id="attached"> Attached
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn addnote-button" id="addNoteButton">Add</button>
+                <button type="button" class="btn cancel-button" id="cancelButton">Cancel</button>
+            </div>
         </div>
     </div>
 </body>
