@@ -25,4 +25,15 @@ body {
     position: absolute;
     bottom: 10px;
     left: 10px;
+    z-index: 10;
+}
+.hole {
+    border-radius: 100%;
+    background: radial-gradient(#000, #555);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 290px;
+    left: 130px;
+    z-index: 1;
 }
