@@ -17,6 +17,22 @@ body {
     height: 460px;
     position: relative;
 }
+.level--hidden {
+    display: none;
+}
+.menu {
+    background-color: antiquewhite;
+    width: 300px;
+    height: 460px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.menu--hidden {
+    display: none;
+}
 .ball {
     border-radius: 100%;
     background: radial-gradient(#FF8B47, #000);
@@ -27,6 +43,7 @@ body {
     left: 10px;
     z-index: 10;
 }
+
 .hole {
     border-radius: 100%;
     background: radial-gradient(#000, #555);
@@ -36,4 +53,18 @@ body {
     bottom: 290px;
     left: 130px;
     z-index: 1;
+}
+
+.btn {
+    border: 1px solid #fc7121;
+    background-color: #FF8B47;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.last-time {
+    margin-top: 20px;
+    color: #fc7121;
+    font-weight: bold;
 }
