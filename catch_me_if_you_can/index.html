@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GMaps</title>
     <style>
+        body {
+            font-family: sans-serif;
+        }
         #map {
             height:400px;
             width:100%;
@@ -34,6 +37,32 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .chat {
+            border: 1px solid gray;
+            border-radius: 2px;
+            background-color: lightgray;
+            padding: 10px;
+        }
+        .message {
+            margin-top: 10px;
+            background-color: #a5a5a5;
+            padding: 10px;
+            border-radius: 2px;
+        }
+        .message__header {
+            display: flex;
+        }
+        .message__nick {
+            font-weight: bold;
+        }
+        .message__time {
+            margin-left: 5px;
+            font-style: italic;
+            font-size: 0.8em;
+        }
+        .message__content {
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -52,5 +81,20 @@
         <img src="icon/3.png" alt="">
         <img src="icon/4.png" alt="">
     </div>
+    <div class="chat">
+            <form id="form" class="form">
+                <div>
+                    Nick:<br>
+                    <input type="text" id="nick">
+                </div>
+                <div>
+                    Message:<br>
+                    <input type="text" id="content">
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+            <div id="messages" class="messages">
+            </div>
+        </div>
 </body>
 </html>
