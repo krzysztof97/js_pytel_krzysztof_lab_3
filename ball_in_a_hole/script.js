@@ -27,7 +27,8 @@ function initialize() {
 }
 
 // po załadowaniu obiektów DOM odpala funkcję inicjalizującą grę
-document.addEventListener("load", initialize)
+//document.addEventListener("DOMContentLoaded", initialize)
+initialize()
 
 // funkcja rozpoczynająca nową grę, ukrywa menu, pokazuje planszę
 function startGame()
