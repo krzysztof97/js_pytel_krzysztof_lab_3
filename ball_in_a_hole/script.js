@@ -1,3 +1,4 @@
+// deklaracja zmiennych
 let ball, level, menu
 let ballSpeedX, ballSpeedY, ballPosX, ballPosY, ballSizeX, ballSizeY
 let playgroundX, playgroundY
@@ -6,6 +7,7 @@ let start, lastTime
 let gameRunning = false
 let startTime, endTime
 
+// funkcja inicjalizująca gre, podstawia obiekty DOM pod zmienne oraz ustala rozmiary elementów
 function initialize() {
     ball = document.querySelector('.ball')
     level = document.querySelector('.level')
@@ -24,8 +26,10 @@ function initialize() {
     holeSizeY = 40
 }
 
+// po załadowaniu obiektów DOM odpala funkcję inicjalizującą grę
 document.addEventListener("DOMContentLoaded", initialize)
 
+// funkcja rozpoczynająca nową grę, ukrywa menu, pokazuje planszę
 function startGame()
 {
     setBallPos()
@@ -40,13 +44,15 @@ function startGame()
     startTime = Date.now()
 }
 
-
+// funkcja wywoływana na zdarzeniu zmiany orientacji, na podstawie pochylenia zmienia prędkość kulki
 function orientationChange(event) {
     //event.alpha 0 360, event.beta -180 180, event.gamma -90 90
     ballSpeedX = 1*event.gamma
     ballSpeedY = -1*event.beta
 }
 
+// funkcja przesuwa kulke jeśli gra trwa w zależności od jej prędkości
+// funkcja jest rekurencyjna, uruchamia samą siebie jeśli kulka nie wpadła do dziury
 function moveBall() 
 {
     if(!gameRunning)
@@ -68,12 +74,13 @@ function moveBall()
     }
 }
 
+// zmienia pozycję elementu DOM reprezentującego kulkę
 function setBallPos()
 {
     ball.style.left = ballPosX + "px"
     ball.style.bottom = ballPosY + "px"
 }
-
+// sprawdza czy piłka wpadła do dziury
 function ballInTheHole()
 {
     if(ballPosX >= holePosX && ballPosX+ballSizeX <= holePosX+holeSizeX && ballPosY >= holePosY && ballPosY+ballSizeY <= holePosY+holeSizeY)
@@ -83,6 +90,7 @@ function ballInTheHole()
     return false
 }
 
+// kończy grę, ukrywa plansze, pokazuje menu i wywołuję aktualizację czasu gry
 function endGame()
 {
     gameRunning = false
@@ -92,6 +100,7 @@ function endGame()
     updateTime()
 }
 
+// funkcja oblicza różnicę czasu pomiędzy rozpoczęciem i zakończeniem oraz aktualizuje wynik w menu
 function updateTime()
 {
     let fullMiliseconds = endTime - startTime
