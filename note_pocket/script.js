@@ -35,9 +35,9 @@ class NotePocket {
         this.updateStorage()
     }
 
-    remove(id)
+    remove(_id)
     {
-        this.Notes = this.Notes.filter(note => note.id !== id)
+        this.Notes = this.Notes.filter(note => note.id !== _id)
         this.updateStorage()
     }
 
@@ -133,8 +133,10 @@ function init()
 
         let removeButtons = document.querySelectorAll(".note-remove")
         removeButtons.forEach(function(e){
-            id = parseInt(e.dataset.noteid)
-            e.addEventListener('click', () => removeNote(id))
+            let _id = parseInt(e.dataset.noteid)
+            e.addEventListener('click', function(){
+                removeNote(_id)
+            })
         })
 
     }
