@@ -1,3 +1,4 @@
+// deklaracja wymaganych zmiennych
 let socketKey = "fj3Dk83A9fGr4Dc2"; // filtrowanie wiadomości z websocket po tym kluczu (nagłówek wiadomości)
 let uluru, map, marker
 let ws;
@@ -13,6 +14,7 @@ let chatNick, chatContent, chatMessages, chatForm
 //ws = new WebSocket("ws://91.121.6.192:8010")
 ws = new WebSocket("ws://77.55.222.58:443")
 
+// funkcja wykonywana po załadowaniu kodu mapy
 function initMap()
 {
     uluru = { lat: -25.363, lng: 131.044 }
@@ -39,11 +41,13 @@ function initChat()
     })
 }
 
+// funkcja pobierająca aktualną lokalizację
 function getLocalization()
 {
     navigator.geolocation.getCurrentPosition(geoOk, geoFail)
 }
 
+// jesli się udało pobieram koordynaty i ustawiam marker na odpowiedniej pozycji
 function geoOk(data)
 {
     begForLocation.classList.remove('beg-for-location--visible');
@@ -55,16 +59,19 @@ function geoOk(data)
 
 }
 
+// jeśli się nie udało, pokazuje informację o koniecznosci włączenia lokalizacji
 function geoFail(data)
 {
     begForLocation.classList.add('beg-for-location--visible');
 }
 
+// uruchomienie nasłuchiwania zdarzenia wciśnięcia klawiszy myszy
 function watchKeys()
 {
     document.addEventListener('keydown', moveMarker)
 }
 
+// funkcja sprawdzajaca który klawisz został wciśnięty i ustalająca położenie markera
 function moveMarker(e)
 {
     let coords = { 
@@ -92,6 +99,7 @@ function moveMarker(e)
     placeMyMarker(coords, 'move')
 }
 
+// funkcja umieszcza marker na mapie i przekazuje wiadomość do funkcji wysyłającej lokalizacje do websocket
 function placeMyMarker(_coords, _action)
 {
     marker.setPosition(_coords)
@@ -107,24 +115,30 @@ function placeMyMarker(_coords, _action)
     sendMessage(me)
 }
 
+// wysyła wiadomość do websocket dodając klucz tej aplikacji ( filtrowanie od innych aplikacji )
 function sendMessage(obj)
 {
     ws.send(socketKey + JSON.stringify(obj))
 }
 
+// funkcja odczytująca wiadomość z websocket
 function receiveMessage(msg)
 {
+    // sprawdza czy wiadomość z websocket zawiera klucz filtrujący tej aplikacji
     if(msg.substring(0, socketKey.length) == socketKey)
     {
         msg = msg.substring(socketKey.length)
         msg = JSON.parse(msg)
         
+        // pomijam wiadomość która zawiera id tego użytkownika
         if(msg.id != guid)
         {
+            // jesli nowy użytkownik to dodaje nowy marker do mapy
             if(msg.action == 'new')
             {
                 players[msg.id] = new google.maps.Marker({position: msg.coords, map: map, icon: iconString(msg.playericon)});
             }
+            // jesli użytkownik się przesunął to przesuwam jego marker
             if(msg.action == 'move')
             {
                 if(players[msg.id])
@@ -132,10 +146,12 @@ function receiveMessage(msg)
                 else
                     players[msg.id] = new google.maps.Marker({position: msg.coords, map: map, icon: iconString(msg.playericon)});
             }
+            // jeśli użytkownik się rozłączył to usuwam marker
             if(msg.action == 'close')
             {
                 players[msg.id].setMap(null)
             }
+            // jeśli to wiadomość chatu to przekazuje do funkcji wyświetlającej
             if(msg.action == 'chat')
             {
                 showMessage(msg)
@@ -144,16 +160,20 @@ function receiveMessage(msg)
     }
 }
 
+// odpalenie funkcji pobirającej lokalizację
 getLocalization()
 
+// odpalenie funkcji która włącza nasłuchiwanie zdarzenia kliknięcia klawisza klawiatury
 watchKeys()
 
+// funkcja która się wykonuje przy otrzymaniu wiadomości z websocket
 ws.onmessage = function(e) 
 { 
     let msg = e.data
     receiveMessage(msg)
 };
 
+// wysłanie wiadomości o zamknięciu okna do websocket
 window.onbeforeunload = function(e)
 {
     sendMessage({
@@ -162,11 +182,13 @@ window.onbeforeunload = function(e)
     });
 }
 
+// funkcja pomocnicza która zwraca ścieżkę pliku do avatara
 function iconString(number)
 {
     return `icon/${number}.png`
 }
 
+// funkcja wysyłająca wiadomosc chatu
 function sendChatMessage()
 {
     let msg = {
@@ -177,6 +199,7 @@ function sendChatMessage()
         action: 'chat'
     }
 
+    // sprawdza czy nick i wiadomość nie są puste
     if(msg.nick.length > 0 && msg.content.length > 0)
     {
         chatContent.value = ''
@@ -184,6 +207,7 @@ function sendChatMessage()
     }
 }
 
+// wyświetla na stronei wiadomość
 function showMessage(msg)
 {
     let messageDOMObject = 
